@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
 import BIcon from "@/assets/bicon.svg";

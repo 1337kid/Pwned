@@ -1,3 +1,4 @@
+"use client";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,8 +11,8 @@ import { FaGoogle } from "react-icons/fa";
 import { ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import Logo from "@/assets/mainlogo.svg";
-import { loginAction } from "@/actions/users";
-import { useTransition } from "react";
+import { loginAction, signoutAction } from "@/actions/users";
+import { useEffect, useState, useTransition } from "react";
 
 import {
   Dialog,
@@ -22,7 +23,8 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const Navbar = () => {
+const Navbar = ({ auth }) => {
+  const [showDialog, setShowDialog] = useState(false);
   const [pending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -31,6 +33,14 @@ const Navbar = () => {
       const { error, url } = await loginAction(provider);
       if (!error && url) router.push(url);
       else console.log("not loggedin");
+    });
+  };
+
+  const handleSignOut = () => {
+    startTransition(async () => {
+      const { error } = await signoutAction();
+      if (error) console.log(error);
+      else router.push("/");
     });
   };
 
@@ -56,32 +66,40 @@ const Navbar = () => {
             <DropdownMenuItem>ES</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Dialog>
-          <DialogTrigger asChild>
-            <div className="flex gap-5 items-center">
-              <Button className="bg-our_green text-black hover:bg-our_green/[.6] rounded-[20px] h-12 hover:text-white">
-                Sign Up
-              </Button>
-            </div>
-          </DialogTrigger>
-          <DialogContent className="bg-[#0f0f0f] scale-125 rounded-[12px] py-8 px-6 flex flex-col justify-center max-w-[321px] items-center gap-6 border-none outline-none [&>button]:hidden">
-            <DialogTitle className="flex flex-col gap-6 items-center">
-              <Image src={Logo} alt="l;ogo" />
-              <Button
-                className="bg-white/[.12] text-white rounded-[10px] w-[281px] h-12 border border-zinc-500"
-                onClick={() => handleSignIn("google")}
-              >
-                <FaGoogle /> Sign Up with Google
-              </Button>
-              <Button
-                className="bg-white/[.12] -mt-4 text-white rounded-[10px] w-[281px] h-12 border border-zinc-500"
-                onClick={() => handleSignIn("google")}
-              >
-                <FaGoogle /> Sign Up with GitHub
-              </Button>
-            </DialogTitle>
-          </DialogContent>
-        </Dialog>
+        {auth ? (
+          <div className="flex gap-5 items-center">
+            <Button className="bg-our_green text-black hover:bg-our_green/[.6] rounded-[20px] h-12 hover:text-white" onClick={() => signoutAction()}>
+              Sign Out
+            </Button>
+          </div>
+        ) : (
+          <Dialog onOpenChange={setShowDialog} showDialog={!auth}>
+            <DialogTrigger asChild>
+              <div className="flex gap-5 items-center">
+                <Button className="bg-our_green text-black hover:bg-our_green/[.6] rounded-[20px] h-12 hover:text-white">
+                  Sign In
+                </Button>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="bg-[#0f0f0f] scale-125 rounded-[12px] py-8 px-6 flex flex-col justify-center max-w-[321px] items-center gap-6 border-none outline-none [&>button]:hidden">
+              <DialogTitle className="flex flex-col gap-6 items-center">
+                <Image src={Logo} alt="l;ogo" />
+                <Button
+                  className="bg-white/[.12] text-white rounded-[10px] w-[281px] h-12 border border-zinc-500"
+                  onClick={() => handleSignIn("google")}
+                >
+                  <FaGoogle /> Sign Up with Google
+                </Button>
+                <Button
+                  className="bg-white/[.12] -mt-4 text-white rounded-[10px] w-[281px] h-12 border border-zinc-500"
+                  onClick={() => handleSignIn("google")}
+                >
+                  <FaGoogle /> Sign Up with GitHub
+                </Button>
+              </DialogTitle>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </div>
   );

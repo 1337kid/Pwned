@@ -1,17 +1,16 @@
-"use client";
-
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import LandingBg from "@/assets/landingbg.png";
 import Image from "next/image";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import LandPlay from "@/assets/landplay.png";
 import BgGame from "@/assets/bggame.png";
 import { ChevronRight } from "lucide-react";
+import { getUser } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const user = await getUser();
   return (
     <div className="min-h-screen flex">
       {/* <Button onClick={() => handleSignIn('google')}>Login</Button> */}
@@ -19,7 +18,7 @@ export default function Home() {
         <Navbar />
       </div>
       <div className="w-10/12 h-full px-5 py-4 flex flex-col justify-between">
-        <Header />
+        <Header auth={user} />
         <div className="py-16 px-[50px] items-center flex flex-col gap-16">
           {/* landing */}
           <div className="flex gap-6">
