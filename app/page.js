@@ -1,29 +1,17 @@
 "use client";
 
-import { loginAction } from "@/actions/users";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import LandingBg from "@/assets/landingbg.png";
 import Image from "next/image";
-import { useTransition } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import LandPlay from "@/assets/landplay.png";
 import BgGame from "@/assets/bggame.png";
 import { ChevronRight } from "lucide-react";
 
 export default function Home() {
-  const [pending, startTransition] = useTransition();
-  const router = useRouter();
-
-  const handleSignIn = (provider) => {
-    startTransition(async () => {
-      const { error, url } = await loginAction(provider);
-      if (!error && url) router.push(url);
-      else console.log("not loggedin");
-    });
-  };
   return (
     <div className="min-h-screen flex">
       {/* <Button onClick={() => handleSignIn('google')}>Login</Button> */}

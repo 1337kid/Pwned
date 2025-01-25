@@ -36,13 +36,13 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="relative bg-gray-950 flex flex-col border-b border-[#3D3D3D]/[.2]">
+      <div className="relative bg-[#0f0f0f] flex flex-col border-b border-[#3D3D3D]/[.2]">
         <div className="px-10 h-20 flex items-center justify-between">
           <Image src={Logo} alt="logo" />
           <Image src={BIcon} alt="logo" />
         </div>
       </div>
-      <div className="flex px-5 flex-col -mt-[80px]">
+      <div className="flex px-5 flex-col -mt-[160px]">
         <NavItem text="Home" icon={Home} link="/" />
         <NavItem text="Hot" icon={Hot} link="/hot" />
         <NavItem text="New" icon={New} link="/new"/>
@@ -50,7 +50,7 @@ const Navbar = () => {
         <NavItem text="Favorites" icon={Fav} link="/fav" />
         <NavItem text="Profile" icon={Profile} link="/profile"/>
       </div>
-      <div className="flex justify-around mb-2">
+      <div className="flex justify-around pb-24">
         <Image src={Bottom} alt="bottom" className="hover:cursor-pointer scale-110" />
       </div>
     </>

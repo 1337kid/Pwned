@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`font-dmsans antialiased bg-gray-950`}>{children}</body>
+      <body className={`font-dmsans antialiased bg-[#0f0f0f]`}>{children}</body>
     </html>
   );
 }
