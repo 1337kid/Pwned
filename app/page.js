@@ -1,101 +1,87 @@
+"use client";
+
+import { loginAction } from "@/actions/users";
+import Header from "@/components/Header";
+import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import LandingBg from "@/assets/landingbg.png";
 import Image from "next/image";
+import { useTransition } from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import LandPlay from "@/assets/landplay.png";
+import BgGame from "@/assets/bggame.png";
+import { ChevronRight } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [pending, startTransition] = useTransition();
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleSignIn = (provider) => {
+    startTransition(async () => {
+      const { error, url } = await loginAction(provider);
+      if (!error && url) router.push(url);
+      else console.log("not loggedin");
+    });
+  };
+  return (
+    <div className="min-h-screen flex">
+      {/* <Button onClick={() => handleSignIn('google')}>Login</Button> */}
+      <div className="w-2/12 min-h-screen justify-between flex flex-col border-r border-[#3D3D3D]/[.2]">
+        <Navbar />
+      </div>
+      <div className="w-10/12 h-full px-5 py-4 flex flex-col justify-between">
+        <Header />
+        <div className="py-16 px-[50px] items-center flex flex-col gap-16">
+          {/* landing */}
+          <div className="flex gap-6">
+            <div className="relative">
+              <Image src={LandingBg} alt="lbg" />
+              <div className="absolute bottom-12 left-12 flex flex-col text-white">
+                <span className="font-medium mb-2">EXCEL PLAY 2024</span>
+                <p className="w-[312px] font-medium mb-6">
+                  Nova Dash is a ipsum dolor sit amet, consectetur adipiscing
+                  elit, sed do eiusmod tempor
+                </p>
+                <Button className="bg-our_green text-black max-w-[156px] hover:bg-our_green/[.6] rounded-[20px] h-12 hover:text-white">
+                  Start Playing
+                </Button>
+              </div>
+            </div>
+            <ScrollArea className="w-[220px] h-[480px]">
+              <div className="flex flex-col gap-2">
+                {Array.from({ length: 20 }, (_, i) => i + 1).map((num, index) => (
+                  <div key={index} className="flex items-center w-[200px] p-[9px] px-3 gap-2 hover:cursor-pointer hover:bg-[#161615] text-sm rounded-lg text-[#F5F5F5]">
+                    <Image src={LandPlay} alt="lp" />
+                    Excel Kryptos &apos;24
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+          {/* popular games */}
+          <h4 className="text-white text-[21px] font-medium items-center text-left flex w-full">
+            Popular Games <ChevronRight />
+          </h4>
+          <ScrollArea className="w-full h-[346px] px-2 -mt-10">
+            <div className="flex gap-8">
+              {Array.from({ length: 20 }, (_, i) => i + 1).map((num, index) => (
+                <div className="flex flex-col items-center w-[186px] hover:cursor-pointer hover:bg-[#161615] rounded-lg text-[#F5F5F5]" key={index}>
+                  <Image src={BgGame} alt="lp" />
+                  <div className="flex flex-col gap-1 mt-1">Tiny Tina's Wonderlands
+                    <div className="flex gap-1">
+                      <span className="bg-[#d9ff97] px-2 rounded-[4px] text-black">-20%</span>
+                      <span className="line-through text-[#F5F5F5]/[.6]">¥199</span>
+                      <span className="text-[#F5F5F5]">¥159.20</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />{" "}
+          </ScrollArea>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
