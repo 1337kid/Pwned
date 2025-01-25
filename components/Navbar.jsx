@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
 import BIcon from "@/assets/bicon.svg";
@@ -46,13 +46,18 @@ const Navbar = () => {
       <div className="flex px-5 flex-col -mt-[160px]">
         <NavItem text="Home" icon={Home} link="/" />
         <NavItem text="Hot" icon={Hot} link="/hot" />
-        <NavItem text="New" icon={New} link="/new"/>
+        <NavItem text="New" icon={New} link="/new" />
         <NavItem text="Rising" icon={Rising} link="/rising" />
         <NavItem text="Favorites" icon={Fav} link="/fav" />
-        <NavItem text="Profile" icon={Profile} link="/profile"/>
+        <NavItem text="Profile" icon={Profile} link="/profile" />
       </div>
       <div className="flex justify-around pb-24">
-        <Image src={Bottom} alt="bottom" className="hover:cursor-pointer scale-110" />
+        <Image
+          src={Bottom}
+          alt="bottom"
+          className="hover:cursor-pointer scale-110"
+          onClick={() => router.push("https://play.excelmec.org/novadash")}
+        />
       </div>
     </>
   );

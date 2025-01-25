@@ -30,19 +30,26 @@ export default async function Home() {
                   Nova Dash is a ipsum dolor sit amet, consectetur adipiscing
                   elit, sed do eiusmod tempor
                 </p>
-                <Button className="bg-our_green text-black max-w-[156px] hover:bg-our_green/[.6] rounded-[20px] h-12 hover:text-white">
-                  Start Playing
-                </Button>
+                <a href="https://play.excelmec.org/novadash" className="w-[156px]">
+                  <Button className="bg-our_green text-black max-w-[156px] hover:bg-our_green/[.6] rounded-[20px] h-12 hover:text-white">
+                    Start Playing
+                  </Button>
+                </a>
               </div>
             </div>
             <ScrollArea className="w-[220px] h-[480px]">
               <div className="flex flex-col gap-2">
-                {Array.from({ length: 20 }, (_, i) => i + 1).map((num, index) => (
-                  <div key={index} className="flex items-center w-[200px] p-[9px] px-3 gap-2 hover:cursor-pointer hover:bg-[#161615] text-sm rounded-lg text-[#F5F5F5]">
-                    <Image src={LandPlay} alt="lp" />
-                    Excel Kryptos &apos;24
-                  </div>
-                ))}
+                {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                  (num, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center w-[200px] p-[9px] px-3 gap-2 hover:cursor-pointer hover:bg-[#161615] text-sm rounded-lg text-[#F5F5F5]"
+                    >
+                      <Image src={LandPlay} alt="lp" />
+                      Excel Kryptos &apos;24
+                    </div>
+                  )
+                )}
               </div>
             </ScrollArea>
           </div>
@@ -53,12 +60,20 @@ export default async function Home() {
           <ScrollArea className="w-full h-[346px] px-2 -mt-10">
             <div className="flex gap-8">
               {Array.from({ length: 20 }, (_, i) => i + 1).map((num, index) => (
-                <div className="flex flex-col items-center w-[186px] hover:cursor-pointer hover:bg-[#161615] rounded-lg text-[#F5F5F5]" key={index}>
+                <div
+                  className="flex flex-col items-center w-[186px] hover:cursor-pointer hover:bg-[#161615] rounded-lg text-[#F5F5F5]"
+                  key={index}
+                >
                   <Image src={BgGame} alt="lp" />
-                  <div className="flex flex-col gap-1 mt-1">Tiny Tina's Wonderlands
+                  <div className="flex flex-col gap-1 mt-1">
+                    Tiny Tina's Wonderlands
                     <div className="flex gap-1">
-                      <span className="bg-[#d9ff97] px-2 rounded-[4px] text-black">-20%</span>
-                      <span className="line-through text-[#F5F5F5]/[.6]">¥199</span>
+                      <span className="bg-[#d9ff97] px-2 rounded-[4px] text-black">
+                        -20%
+                      </span>
+                      <span className="line-through text-[#F5F5F5]/[.6]">
+                        ¥199
+                      </span>
                       <span className="text-[#F5F5F5]">¥159.20</span>
                     </div>
                   </div>
